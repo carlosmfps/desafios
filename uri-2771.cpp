@@ -1,92 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
-int ar[5][5];
-int ganhador=0;
-
-void aux(int i,int j,char origin){
-    if(ganhador==0){
-        if(i!=4 || j !=4){
-            ar[i][j]=1;
-            switch(origin)
-            {
-                case 'c':
-                    if(j!=0 && ar[i][j-1]==0){
-                        aux(i,j-1,'d');
-                    }//esquerda
-                    if(i!=4 && ar[i+1][j]==0){
-                        aux(i+1,j,'c');
-                    }//baixo
-                    if(j!=4 && ar[i][j+1]==0){
-                        aux(i,j+1,'e');
-                    }//direita
-                    break;
-                case 'e':
-                    if(i!=0 && ar[i-1][j]==0){
-                        aux(i-1,j,'b');
-                    }//cima
-                    if(i!=4 && ar[i+1][j]==0){
-                        aux(i+1,j,'c');
-                    }//baixo
-                    if(j!=4 && ar[i][j+1]==0){
-                        aux(i,j+1,'e');
-                    }//direita
-                    break;
-                case 'd':
-                    if(i!=0 && ar[i-1][j]==0){
-                        aux(i-1,j,'b');
-                    }//cima
-                    if(i!=4 && ar[i+1][j]==0){
-                        aux(i+1,j,'c');
-                    }//baixo
-                    if(j!=0 && ar[i][j-1]==0){
-                        aux(i,j-1,'d');
-                    }//esquerda
-                    break;
-                case 'b':
-                    if(i!=0 && ar[i-1][j]==0){
-                        aux(i-1,j,'b');
-                    }//cima
-                    if(j!=4 && ar[i][j+1]==0){
-                        aux(i,j+1,'e');
-                    }//direita
-                    if(j!=0 && ar[i][j-1]==0){
-                        aux(i,j-1,'d');
-                    }//esquerda
-                    break;
-            }
-        }
-        else{
-            ganhador=1;
-        }
-    }
-}
-
 
 int main ()
 {
-    int testes;
-    int i,j,x;
-    cin >> testes;
-    for(x=0;x<testes;x++){
-        for(i=0;i<5;i++){
-            for(j=0;j<5;j++){
-                cin>> ar[i][j];
-            }
+    int n,k,i,x,y,z,input;
+    float med;
+    vector<int> vetor;
+    vector<float> medias;
+    while(cin>>n){
+        cin>>k;
+        for(i=0;i<n;i++){
+            cin >> input;
+            vetor.push_back(input);
         }
-        aux(0,0,'e');
-        if(ganhador==1){
-            printf("COPS\n");
-        }
-        else{
-            printf("ROBBERS\n");
-        }
+        
+        for(x= 0; x < n; x++)
+            for(y = x+1; y < n; y++)
+                for(z = y+1; z < n; z++){
+                    med =(vetor[x] + vetor[y] + vetor[z]) / 3.0;
+                    medias.push_back(med);
+                }
 
-        for(i=0;i<5;i++){
-            for(j=0;j<5;j++){
-                ar[i][j]=0;
-            }
+        sort(medias.begin(), medias.end(), greater<float>()); 
+        printf("%.1f\n", medias[k-1]);
+        
+        for(i=0;i<n;i++){
+            vetor.pop_back();
         }
-        ganhador=0;
     }
     
     
